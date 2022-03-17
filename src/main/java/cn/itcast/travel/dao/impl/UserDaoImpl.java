@@ -23,11 +23,45 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void save(User user) {
-        String sql = "insert into tab_user(username,password,name,birthday,sex,telephone,email)" +
-                "values(?,?,?,?,?,?,?)";
-        jdbcTemplate.update(sql,user.getUsername(),user.getPassword(),user.getName(),user.getBirthday(),user.getSex(),
-                user.getTelephone(),user.getEmail());
+    public User findByCode(String code) {
+        User user = null;
+        try {
+            String sql = "select * from tab_user where code = ?";
+            user = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<User>(User.class),code);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 
+    @Override
+    public User findByUsernameAndPassword(String username, String password) {
+        User user = null;
+        try {
+            String sql = "select * from tab_user where username = ? and password = ?";
+            user = jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<User>(User.class),username,password);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    @Override
+    public void save(User user) {
+        String sql = "insert into tab_user(username,password,name,birthday,sex,telephone,email,status,code)" +
+                "values(?,?,?,?,?,?,?,?,?)";
+        jdbcTemplate.update(sql,user.getUsername(),user.getPassword(),user.getName(),user.getBirthday(),user.getSex(),
+                user.getTelephone(),user.getEmail(),user.getStatus(),user.getCode());
+
+    }
+
+    @Override
+    public void update(String code) {
+        try {
+            String sql = "update tab_user set status = 'Y' where code = ?";
+            int update = jdbcTemplate.update(sql, code);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+        }
     }
 }

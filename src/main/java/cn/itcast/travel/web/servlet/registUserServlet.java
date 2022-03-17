@@ -20,20 +20,22 @@ import java.util.Map;
 @WebServlet("/registUserServlet")
 public class registUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
 //      验证码校验
-        String check = request.getParameter("check");
-        HttpSession session = request.getSession();
-        String checkcode_server = (String) session.getAttribute("CHECKCODE_SERVER");
-        session.removeAttribute("CHECKCODE_SERVER");//防止复用
-        if (!checkcode_server.equals(check)){
-            ResultInfo info = new ResultInfo();
-            info.setFlag(false);
-            info.setErrorMsg("注册失败");
-            ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(info);
-            response.setContentType("application/json;charset=utf-8");
-            response.getWriter().write(json);
-        }
+//        String check = request.getParameter("check");
+//        HttpSession session = request.getSession();
+//        String checkcode_server = (String) session.getAttribute("CHECKCODE_SERVER");
+//        session.removeAttribute("CHECKCODE_SERVER");//防止复用
+//        if (!checkcode_server.equals(check)){
+//            ResultInfo info = new ResultInfo();
+//            info.setFlag(false);
+//            info.setErrorMsg("注册失败");
+//            ObjectMapper mapper = new ObjectMapper();
+//            String json = mapper.writeValueAsString(info);
+//            response.setContentType("application/json;charset=utf-8");
+//            response.getWriter().write(json);
+//        }
 
 //      提取数据
         Map<String,String[]> map = request.getParameterMap();
@@ -45,14 +47,13 @@ public class registUserServlet extends HttpServlet {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
+//        System.out.println(user);
         UserService userService = new UserServiceImpl();
         boolean falg = userService.regist(user);
         ResultInfo info = new ResultInfo();
         if (falg){
-//       注册成功
-            info.setFlag(true);
-        }else {
-//        注册失败
+          info.setFlag(true);
+        }else{
             info.setFlag(false);
             info.setErrorMsg("注册失败");
         }

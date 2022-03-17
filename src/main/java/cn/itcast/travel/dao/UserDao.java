@@ -11,8 +11,26 @@ public interface UserDao {
     public User findByUsername(String username);
 
     /**
+     * 邮箱的激活唯一code
+     * @param code code
+     * @return
+     */
+    public User findByCode(String code);
+
+
+
+    User findByUsernameAndPassword(String username, String password);
+
+
+    /**
      * 保存数据
      * @param user
      */
     void save(User user);
+
+    /**
+     * 根据code修改数据信息
+     * @param code
+     */
+    void update(String code);
 }
