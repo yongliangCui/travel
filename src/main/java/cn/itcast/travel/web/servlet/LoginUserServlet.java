@@ -1,6 +1,7 @@
 package cn.itcast.travel.web.servlet;
 
 import cn.itcast.travel.domain.ResultInfo;
+import cn.itcast.travel.domain.User;
 import cn.itcast.travel.service.UserService;
 import cn.itcast.travel.service.impl.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,13 +23,18 @@ public class LoginUserServlet extends HttpServlet {
         UserService userService = new UserServiceImpl();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        boolean login = userService.login(username, password);
         ResultInfo resultInfo = new ResultInfo();
-        if (login && username!=null && password!= null){
-            resultInfo.setFlag(true);
-        }else{
+        if (username == null || password == null){
             resultInfo.setFlag(false);
-            resultInfo.setErrorMsg("用户名和密码不正确");
+            resultInfo.setErrorMsg("账户名和密码不能为空");
+        }else{
+            User user = userService.login(username, password);
+            if (user == null){
+                resultInfo.setFlag(false);
+                resultInfo.setErrorMsg("用户名和密码不正确");
+            }else{
+                resultInfo.setFlag(true);
+            }
         }
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(resultInfo);

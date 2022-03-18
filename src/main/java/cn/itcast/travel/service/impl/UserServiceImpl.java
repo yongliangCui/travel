@@ -38,14 +38,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean login(String username, String password) {
+    public User login(String username, String password) {
         User user = userDao.findByUsernameAndPassword(username, password);
-        if (user != null){
-//          登录成功
-            return true;
-        }else{
-//          登录失败
-            return false;
-        }
+        return user;
     }
 }

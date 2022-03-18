@@ -23,6 +23,6 @@ public interface UserService {
      * @param password 用户密码
      * @return 是否登陆成功
      */
-    public boolean login(String username, String password);
+    public User login(String username, String password);
 
 }
