@@ -17,7 +17,7 @@ public class PageBean<T> {
         this.totalCount = totalCount;
     }
 
-    public int getTotalPage(int i) {
+    public int getTotalPage() {
         return totalPage;
     }
 
