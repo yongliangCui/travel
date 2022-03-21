@@ -86,7 +86,7 @@ public class UserServlet extends BaseServlet{
      * @param response
      * @throws IOException
      */
-    public void active(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public void activeUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
 //        UserService userService = new UserServiceImpl();
         String code = request.getParameter("code");
         boolean active = userService.active(code);
